@@ -1,20 +1,7 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { Image, Text, View } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50,
-  },
-  logo: {
-    width: 66,
-    height: 58,
-  },
-});
-
+// This is the query function for tanstack/react-query
 async function queryPokemonApi(name) {
   const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
 
@@ -26,6 +13,7 @@ async function queryPokemonApi(name) {
   return json;
 }
 
+// Queries the pokemon API and returns the pokemon image
 export default function Pokemon({name}) {
   const query = useQuery({ queryKey: ['getPokemon', name], queryFn: () => queryPokemonApi(name) });
 
@@ -39,7 +27,7 @@ export default function Pokemon({name}) {
 
   return (
         <View>          
-          <Image style={styles.logo} source={{ uri: query.data.sprites.front_default}} />
+          <Image className="w-40 h-36" source={{ uri: query.data.sprites.front_default}} />
         </View>
   )
 }
